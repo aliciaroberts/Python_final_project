@@ -2,30 +2,46 @@ import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
 
-from astropy import con as const
+from astropy import constants as const
 from astropy import units as u
-
-boltz = con.k_B
 
 
 class Star:
-    def __init__(self, radius, temperature):
+    def __init__(self, radius, T):
         self.radius = radius
-        self.temperature = temperature
+        self.T = T
 
     @property
-    def luminosity(self): #temp in K, radius in Solar Radii
-        luminosity = 4*np.pi*radius**2*boltz*temperature**4
+    def luminosity(self): # temp in K, radius in Solar Radii
+        luminosity = 4 * np.pi * self.radius ** 2 * const.k_B * self.T ** 4
         return luminosity
 
     @property
     def spectral_class(self):
-        spectral_class = "G0" # TODO
-        return spectral_class
+        """Spectral classification based on https://lweb.cfa.harvard.edu/~pberlind/atlas/htmls/note.html
+
+        Returns:
+            string: spectral class of the star based on temp
+        """
+        if self.T < 3500:
+            return "M"
+        elif self.T < 5000:
+            return "K"
+        elif self.T < 6000:
+            return "G"
+        elif self.T < 7500:
+            return "F"
+        elif self.T < 10000:
+            return "A"
+        elif self.T < 25000:
+            return "B"
+        else:
+            return "O"
 
     @property
     def absolute_magnitude(self):
-        abs_magnitude = 0 # TODO
+        # M - 0 = -2.5 log_10 (L / L_0)
+        abs_magnitude = -2.5 * np.log10(self.luminosity / const.L_bol0)
         return abs_magnitude
 
 class HRDiagram:
