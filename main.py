@@ -14,7 +14,7 @@ class Star:
         self.temperature = temperature
 
     @property
-    def luminosity(self):
+    def luminosity(self): #temp in K, radius in Solar Radii
         luminosity = 4*np.pi*radius**2*boltz*temperature**4
         return luminosity
 
