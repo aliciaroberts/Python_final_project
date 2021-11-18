@@ -1,8 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas as pd
 
-from astropy import constants as const
+from astropy import con as const
 from astropy import units as u
+
+boltz = con.k_B
+
 
 class Star:
     def __init__(self, radius, temperature):
@@ -11,7 +15,7 @@ class Star:
 
     @property
     def luminosity(self):
-        luminosity = 0 # TODO
+        luminosity = 4*np.pi*radius**2*boltz*temperature**4
         return luminosity
 
     @property
